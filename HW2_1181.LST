@@ -1,0 +1,104 @@
+Microsoft (R) Macro Assembler Version 5.00                  1/5/23 21:03:38
+PHONBURIS NAENGNOI                                          Page     1-1
+
+
+				TITLE PHONBURIS NAENGNOI 
+				SUBTTL 6410451181 
+ 0000				STACK SEGMENT STACK 
+ 0000  0040[			DW 64 DUP(?) 
+	   ????			
+			 ]	
+				
+				 
+ 0080				STACK ENDS 
+				 
+ 0000				DATA SEGMENT 
+ 0000  04B0			    RATE DW 1200  
+ 0002  0005			    FRIEND DW 5  
+ 0004  ????			    NET DW ? 
+ 0006  ????			    PAY DW ? 
+ 0008				DATA ENDS 
+				 
+ 0000				CODE SEGMENT 
+				    ASSUME CS:CODE, DS:DATA, SS:STACK 
+				 
+ 0000				    FIRST PROC 
+				         
+ 0000  B8 ---- R		        MOV AX,DATA ; initialize DS 
+ 0003  8E D8			        MOV DS,AX  
+				         
+ 0005  A1 0002 R		        MOV AX,FRIEND  
+ 0008  8B 1E 0000 R		        MOV BX,RATE ; assign RATE to BX and we 
+				will use it as an operand 
+				         
+				        ; AX : FRIEND, BX : RATE 
+ 000C  F7 E3			        MUL BX ; multiply FRIEND with RATE (DX:
+				AX = AX * BX) 
+				         
+				        ; เก็บผลลัพธ์ส�
+				��าหรับราคาอาหารข
+				องทุกคนรวมกั�
+ 000E  A3 0004 R		        MOV [NET],AX 
+ 0011  89 16 0006 R		        MOV [NET+2],DX 
+				 
+ 0015  8B D8			        MOV BX,AX ; ฝาก AX ไว้ท�
+				�่ BX เพราะต้อง decrease FR
+				IEND และ convert friend from byt
+ 0017  A1 0002 R		        MOV AX,FRIEND  
+ 001A  48			        DEC AX ; จำนวนเพื่อ
+				นที่ต้องจ่าย (ยกเ
+				ว้นเจ้าของวั�
+ 001B  98			        CBW 
+ 001C  8B C8			        MOV CX,AX ; MOV FRIEND to CX to use it 
+				as an operand 
+ 001E  8B C3			        MOV AX,BX ; MOV BX back to AX 
+				 
+ 0020  F7 F1			        DIV CX ; (DX,AX)/CX 
+ 0022  A3 0006 R		        MOV PAY,AX  
+				 
+Microsoft (R) Macro Assembler Version 5.00                  1/5/23 21:03:38
+PHONBURIS NAENGNOI                                          Page     1-2
+6410451181                                                  
+
+ 0025  B4 4C			        MOV AH,4CH  
+ 0027  CD 21			        INT 21H 
+ 0029				    FIRST ENDP 
+ 0029				CODE ENDS 
+				 
+				END FIRST 
+Microsoft (R) Macro Assembler Version 5.00                  1/5/23 21:03:38
+PHONBURIS NAENGNOI                                          Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+CODE . . . . . . . . . . . . . .  	0029	PARA	NONE	
+DATA . . . . . . . . . . . . . .  	0008	PARA	NONE	
+STACK  . . . . . . . . . . . . .  	0080	PARA	STACK	
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+FIRST  . . . . . . . . . . . . .  	N PROC	0000	CODE	Length = 0029
+FRIEND . . . . . . . . . . . . .  	L WORD	0002	DATA
+
+NET  . . . . . . . . . . . . . .  	L WORD	0004	DATA
+
+PAY  . . . . . . . . . . . . . .  	L WORD	0006	DATA
+
+RATE . . . . . . . . . . . . . .  	L WORD	0000	DATA
+
+@FILENAME  . . . . . . . . . . .  	TEXT  hw2_1181		
+
+
+     48 Source  Lines
+     48 Total   Lines
+     10 Symbols
+
+  51070 + 465474 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors
